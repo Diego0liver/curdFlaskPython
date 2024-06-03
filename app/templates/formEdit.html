@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}    
+        <a href="/"><button class="btn btn-success mt-3 mb-3">Voltar</button></a>
+        <h2>Editar {{userById.nome}}</h2>
+        <form method="POST" action="/editUser/{{userById.id}}">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Nome</label>
+                        <input name="nome" type="text" class="form-control" value="{{userById.nome}}" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Email</label>
+                        <input name="email" type="email" value="{{userById.email}}" class="form-control" id="exampleInputPassword1">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="exampleInputEmail1" class="form-label">Telefone</label>
+                    <input name="telefone" type="text" value="{{userById.telefone}}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="col-md-4">
+                    <label for="exampleInputEmail1" class="form-label">CEP</label>
+                    <input name="cep" type="text" value="{{userById.cep}}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="col-md-4">
+                    <label for="exampleInputEmail1" class="form-label">Data de nascimento</label>
+                    <input name="dataNascimento" value="{{userById.dataNascimento}}" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Atualizar</button>
+        </form>
+{% endblock %}

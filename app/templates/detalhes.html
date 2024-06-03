@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h3 class="text-center">{{userById.nome}}</h3>
+<div class="container">
+    <a href="/"><button class="btn btn-success mt-3 mb-3">Voltar</button></a>
+    <ul class="list-group">
+        <li class="list-group-item active" aria-current="true"><b>{{userById.nome}}</b></li>
+        <li class="list-group-item"><b>E-mail:</b> {{userById.email}}</li>
+        <li class="list-group-item"><b>Telefone:</b> {{userById.telefone}}</li>
+        <li class="list-group-item"><b>CEP:</b> {{userById.cep}}</li>
+        <li class="list-group-item"><b>Data de nascimento:</b> {{userById.dataNascimento.strftime('%d/%m/%Y')}}</li>
+    </ul>
+</div>    
+{% endblock %}

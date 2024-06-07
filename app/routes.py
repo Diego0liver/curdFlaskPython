@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from .models import db, User
+import logging
 
 def configure_routes(app: Flask):
     @app.route('/')
@@ -69,3 +70,30 @@ def configure_routes(app: Flask):
         userById = User.query.get_or_404(id)
 
         return render_template('detalhes.html', userById=userById)
+    
+    @app.route('/login', methods=['POST'])
+    def login():
+        nome = request.form['nome']
+        email = request.form['email']
+        userFirst = User.query.filter_by(email=email).first()
+        if userFirst and userFirst.nome == nome :
+            session['user'] = email
+            print(session)
+            flash('Logado com sucesso', 'success')
+        else:
+            print('nada ainda')
+            flash('Email ou nome esta errado', 'danger')
+    
+        return redirect(url_for('index'))
+
+    @app.route('/logout')
+    def logout():
+        session.pop('user', None)
+        flash('Logout com sucesso', 'success')
+        return redirect(url_for('index'))
+    
+
+
+    if __name__ == "__main__":
+        app.run(debug=True)
+

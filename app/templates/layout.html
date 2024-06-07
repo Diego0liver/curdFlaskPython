@@ -10,9 +10,17 @@
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand">CRUD Flask</a>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Login
-            </button>
+            {% if session.user %}
+                <form action="/logout">
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Sair
+                    </button>
+                </form>
+            {% else %}
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Login
+                </button>
+            {% endif %}
             <!-- Modal de login -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -22,14 +30,14 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                             <div class="modal-body">
-                                <form>
+                                <form action="/login" method="post">
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                        <label for="exampleInputEmail1" class="form-label">Nome</label>
+                                        <input name="nome" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Senha</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1">
+                                        <label for="exampleInputPassword1" class="form-label">Email</label>
+                                        <input name="email" type="email" class="form-control" id="exampleInputPassword1">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Logar</button>
                                 </form>
@@ -44,6 +52,9 @@
     </nav>
     <div class="text-center">
         <h3>CRUD flask com Autentificaçäo</h3>
+        {% if session.user %}
+            <p>Bem vindo <b>{{session.user}}</b></p>
+        {% endif %}
     </div>
     {% block content %}
     {% endblock %}

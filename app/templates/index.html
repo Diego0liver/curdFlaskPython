@@ -12,8 +12,9 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}    
-        
-        <a href="/novoUser"><button class="btn btn-success mt-3 mb-3">Criar</button></a>
+        {% if session.user %}
+            <a href="/novoUser"><button class="btn btn-success mt-3 mb-3">Criar</button></a>
+        {% endif %}
         <table class="table">
             <thead>
                 <tr>
@@ -33,14 +34,16 @@
                             <a href="/detalhes/{{user.id}}">
                                 <button class="btn btn-secondary">Detalhes</button>
                             </a>
-                            <a href="/editUser/{{user.id}}">
-                                <button class="btn btn-primary">
-                                    Editar
-                                </button>
-                            </a>
-                            <a href="{{url_for('deleteUser', id=user.id)}}">
-                                <button class="btn btn-danger">Excluir</button>
-                            </a>
+                            {% if session.user %}
+                                <a href="/editUser/{{user.id}}">
+                                    <button class="btn btn-primary">
+                                        Editar
+                                    </button>
+                                </a>
+                                <a href="{{url_for('deleteUser', id=user.id)}}">
+                                    <button class="btn btn-danger">Excluir</button>
+                                </a>
+                            {% endif %}    
                         </td>
                     </tr>
                 {% endfor %}    
